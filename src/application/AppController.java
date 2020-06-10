@@ -7,9 +7,7 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-public class AppController {
-    protected String templatePath = null;
-
+public abstract class AppController {
     @FXML
     protected Parent root;
 
@@ -23,22 +21,16 @@ public class AppController {
     }
 
     /**
-     * Load this controller and it's template scene
+     * Loads in a new scene and sets it to be the currently active scene
      */
     public void load() {
-        assert templatePath != null;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(templatePath));
-        root = null;
-
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            SimpleDialog.Error(e);
-        }
-
-        assert root != null;
-        Scene scene = new Scene(root);
-        Main.get_MainStage().setScene(scene);
+        Main.get_MainStage().setScene(loadAction());
         Main.get_MainStage().show();
     }
+
+    /**
+     * Action that runs when AppController.load() is run
+     * @return A scene object
+     */
+    protected abstract Scene loadAction();
 }

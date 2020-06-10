@@ -14,5 +14,11 @@ import java.io.IOException;
  */
 public class Home extends AppController {
     public Home() {
-        templatePath = "Home.fxml";
-    }}
+
+    }
+
+    @Override
+    protected Scene loadAction() {
+        return null;
+    }
+}
