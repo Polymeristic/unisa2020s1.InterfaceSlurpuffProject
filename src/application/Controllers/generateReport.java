@@ -3,18 +3,21 @@ package application.Controllers;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,13 +25,12 @@ import java.util.Calendar;
 import java.util.Random;
 
 public class generateReport extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         //Borderpane Setup
         BorderPane bp = new BorderPane();
-
 
         // Get calendar week start and end date
         Calendar c = Calendar.getInstance();
@@ -39,7 +41,6 @@ public class generateReport extends Application {
             c.add(Calendar.DATE, 1);
         }
         String endDate = df.format(c.getTime());
-
 
         //HBox for Button to switch Filter Between Days/Months
         HBox filterHBox = new HBox();
@@ -57,6 +58,24 @@ public class generateReport extends Application {
         filterHBox.getChildren().addAll(daysButton, monthsButton, yearlyButton);
         filterHBox.setAlignment(Pos.TOP_RIGHT);
         bp.setTop(filterHBox);
+
+        //HomeButton
+        VBox homeButtonBox = new VBox();
+        Button homeButton = new Button("Home");
+        homeButtonBox.getChildren().add(homeButton);
+        VBox.setVgrow(homeButton, Priority.ALWAYS);
+        homeButtonBox.setPadding(new Insets(15, 20, 5, 10));
+        homeButtonBox.setAlignment(Pos.TOP_LEFT);
+        bp.setLeft(homeButtonBox);
+
+        //ExportToPDF Button
+        HBox exportHBox = new HBox();
+        Button exportButton = new Button("Export To PDF");
+        exportHBox.getChildren().add(exportButton);
+        HBox.setHgrow(homeButton, Priority.ALWAYS);
+        exportHBox.setPadding(new Insets(15, 20, 5, 10));
+        exportHBox.setAlignment(Pos.BOTTOM_RIGHT);
+        bp.setBottom(exportHBox);
 
         //BarChart Daily
         CategoryAxis xaxis = new CategoryAxis();
@@ -121,7 +140,6 @@ public class generateReport extends Application {
         Sunday.setName("Sunday");
         Sunday.getData().add(new XYChart.Data(AppointmentsMade, appointmentSunNum));
         Sunday.getData().add(new XYChart.Data(AppointmentsCancelled, cancelSunNum));
-
 
         //Add all Chart Series to the chart
         bcDaily.getData().addAll(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
@@ -229,7 +247,6 @@ public class generateReport extends Application {
         November, December);
 
 
-
         //BarChart for the Monthly setup
         CategoryAxis yearlyXAxis = new CategoryAxis();
         yearlyXAxis.setLabel("Appointment Year");
@@ -285,18 +302,14 @@ public class generateReport extends Application {
         Year2020.getData().add(new XYChart.Data(appointmentsMadeYearly, appointment2020NumYearly));
         Year2020.getData().add(new XYChart.Data(appointmentsCancelledYearly, cancel2020NumYearly));
 
-
-
         //Add all Chart Series to the chart
         bcYearly.getData().addAll(Year2015, Year2016, Year2017, Year2018, Year2019, Year2020);
-
 
         //Scene Setup + Show Stage
         Scene scene = new Scene(bp, 600, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Reports");
         primaryStage.show();
-
 
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
             @Override
