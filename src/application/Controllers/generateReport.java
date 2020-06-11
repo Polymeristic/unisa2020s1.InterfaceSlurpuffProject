@@ -191,7 +191,7 @@ public class generateReport extends Application {
         int appointmentDecNumMonth = GetRandomNumOfAppointmentsMonth();
         int cancelDecNumMonth = GetRandomNumOfAppointmentCancelDays(appointmentDecNumMonth);
 
-
+        //Add Months to the charts, ensuring they grouped.
         XYChart.Series<String, Integer> January = new XYChart.Series<>();
         January.setName("January");
         January.getData().add(new XYChart.Data(appointmentsMadeMonthly, appointmentJanNumMonth));
@@ -252,7 +252,7 @@ public class generateReport extends Application {
         December.getData().add(new XYChart.Data(appointmentsMadeMonthly, appointmentDecNumMonth));
         December.getData().add(new XYChart.Data(appointmentsCancelledMonthly, cancelDecNumMonth));
 
-
+        //Add all Chart Series to the chart
         bcMonth.getData().addAll(January, February, March, April, May, June, July, August, September, October,
         November, December);
 
@@ -323,6 +323,7 @@ public class generateReport extends Application {
         primaryStage.setTitle("Reports");
         primaryStage.show();
 
+        //Change to DaysFilter
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
@@ -332,7 +333,7 @@ public class generateReport extends Application {
 
         daysButton.setOnAction(backToDaysFilter);
 
-
+        //Change Filter to MonthlyBarChart
         EventHandler<ActionEvent> monthlyBarChart = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
@@ -342,6 +343,7 @@ public class generateReport extends Application {
 
         monthsButton.setOnAction(monthlyBarChart);
 
+        //Change filter to YearlyBarChart
         EventHandler<ActionEvent> yearlyBarChart = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
@@ -351,6 +353,7 @@ public class generateReport extends Application {
 
         yearlyButton.setOnAction(yearlyBarChart);
 
+        //Exports the picked barchart to .png
         EventHandler<ActionEvent> ExportStuff = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
@@ -366,7 +369,6 @@ public class generateReport extends Application {
         };
 
         exportButton.setOnAction(ExportStuff);
-
 
     }
 
