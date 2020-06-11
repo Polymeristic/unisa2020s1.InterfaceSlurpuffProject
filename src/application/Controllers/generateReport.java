@@ -358,9 +358,9 @@ public class generateReport extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-                if (yearlyButton.isSelected() == true){
+                if (yearlyButton.isSelected()){
                     saveAsPng(bcYearly);
-                } else if (monthsButton.isSelected() == true){
+                } else if (monthsButton.isSelected()){
                     saveAsPng(bcMonth);
                 } else {
                     saveAsPng(bcDaily);
