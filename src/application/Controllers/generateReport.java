@@ -1,12 +1,13 @@
 package application.Controllers;
 
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -14,11 +15,16 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,7 +76,7 @@ public class generateReport extends Application {
 
         //ExportToPDF Button
         HBox exportHBox = new HBox();
-        Button exportButton = new Button("Export To PDF");
+        Button exportButton = new Button("Export To PNG");
         exportHBox.getChildren().add(exportButton);
         HBox.setHgrow(homeButton, Priority.ALWAYS);
         exportHBox.setPadding(new Insets(15, 20, 5, 10));
@@ -79,8 +85,10 @@ public class generateReport extends Application {
 
         //BarChart Daily
         CategoryAxis xaxis = new CategoryAxis();
+        xaxis.setAnimated(false);
         xaxis.setLabel("Appointment Day");
         NumberAxis yaxis = new NumberAxis();
+        yaxis.setAnimated(false);
         yaxis.setLabel("Number Of Appointments");
         BarChart bcDaily = new BarChart(xaxis, yaxis);
         bcDaily.setTitle("Weekly Report From" + " " + startDate + " " + "-" + " " + endDate);
@@ -147,8 +155,10 @@ public class generateReport extends Application {
 
         //BarChart for the Monthly setup
         CategoryAxis monthXAxis = new CategoryAxis();
+        monthXAxis.setAnimated(false);
         monthXAxis.setLabel("Appointment Month");
         NumberAxis monthYAxis = new NumberAxis();
+        monthYAxis.setAnimated(false);
         monthYAxis.setLabel("Number Of Appointments");
         BarChart bcMonth = new BarChart(monthXAxis, monthYAxis);
         bcMonth.setTitle("Monthly Appointment Report");
@@ -249,8 +259,10 @@ public class generateReport extends Application {
 
         //BarChart for the Monthly setup
         CategoryAxis yearlyXAxis = new CategoryAxis();
+        yearlyXAxis.setAnimated(false);
         yearlyXAxis.setLabel("Appointment Year");
         NumberAxis yearlyYAxis = new NumberAxis();
+        yearlyYAxis.setAnimated(false);
         yearlyYAxis.setLabel("Number Of Appointments");
         BarChart bcYearly = new BarChart(yearlyXAxis, yearlyYAxis);
         bcYearly.setTitle("5 year Appointment Report");
@@ -339,7 +351,35 @@ public class generateReport extends Application {
 
         yearlyButton.setOnAction(yearlyBarChart);
 
+        EventHandler<ActionEvent> ExportStuff = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent e) {
 
+                if (yearlyButton.isSelected() == true){
+                    saveAsPng(bcYearly);
+                } else if (monthsButton.isSelected() == true){
+                    saveAsPng(bcMonth);
+                } else {
+                    saveAsPng(bcDaily);
+                }
+            }
+        };
+
+        exportButton.setOnAction(ExportStuff);
+
+
+    }
+
+    public void saveAsPng(BarChart barChart) {
+        WritableImage image = barChart.snapshot(new SnapshotParameters(), null);
+
+        File file = new File("src/resources/images/BarChart.png");
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+
+        }
     }
 
     private int GetRandomNumOfAppointmentsDays(){
