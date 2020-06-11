@@ -74,9 +74,9 @@ public class generateReport extends Application {
         homeButtonBox.setAlignment(Pos.TOP_LEFT);
         bp.setLeft(homeButtonBox);
 
-        //ExportToPDF Button
+        //ExportToPNG Button
         HBox exportHBox = new HBox();
-        Button exportButton = new Button("Export To PNG");
+        Button exportButton = new Button("Export Chart To PNG");
         exportHBox.getChildren().add(exportButton);
         HBox.setHgrow(homeButton, Priority.ALWAYS);
         exportHBox.setPadding(new Insets(15, 20, 5, 10));
