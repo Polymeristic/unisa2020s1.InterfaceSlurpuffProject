@@ -33,7 +33,6 @@ public class Home extends AppController {
 
         box.getChildren().addAll(new Label("Home"), report);
 
-
         return scene;
     }
 }

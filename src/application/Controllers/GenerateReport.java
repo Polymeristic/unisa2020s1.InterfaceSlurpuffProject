@@ -54,7 +54,7 @@ public class GenerateReport extends AppController {
         // Check if this instances scene has already been created
         if (scene != null) return scene;
 
-        //Borderpane Setup
+        //BorderPane Setup
         BorderPane root = new BorderPane();
 
         // Get calendar week start and end date
@@ -337,7 +337,7 @@ public class GenerateReport extends AppController {
         bcYearly.getData().addAll(Year2015, Year2016, Year2017, Year2018, Year2019, Year2020);
 
         //Scene Setup + Show Stage
-        scene = new Scene(root);
+        scene = new Scene(root, 800, 800);
 
         //Change to DaysFilter
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
