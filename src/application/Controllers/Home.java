@@ -23,20 +23,10 @@ public class Home extends AppController {
     @Override
     protected Scene loadAction() {
         VBox box = new VBox();
-        Button button = new Button("Report");
         Scene scene = new Scene(box, STANDARD_WIDTH, STANDARD_HEIGHT);
 
-        box.getChildren().addAll(new Label("Home"), button);
+        box.getChildren().addAll(new Label("Home"));
 
-        //Home Button to go back to home.
-        EventHandler<ActionEvent> ReturnHome = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                new GenerateReport().load();
-            }
-        };
-
-        button.setOnAction(ReturnHome);
 
         return scene;
     }
