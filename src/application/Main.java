@@ -19,9 +19,23 @@ public class Main extends Application {
 
         // Load the login page
         new Login().load();
-        //new Report().load();
-//        new GenerateReport().load();
-//        new Support().load();
+    }
+
+    /**
+     * Sets the dimensions of the main window
+     * @param width Width
+     * @param height Height
+     */
+    public static void setDimensions(int width, int height) {
+        width += 10;
+
+        _mainStage.setWidth(width);
+        _mainStage.setMaxWidth(width);
+        _mainStage.setMinWidth(width);
+
+        _mainStage.setHeight(height);
+        _mainStage.setMaxHeight(height);
+        _mainStage.setMinHeight(height);
     }
 
     /**
