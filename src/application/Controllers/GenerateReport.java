@@ -32,6 +32,20 @@ import java.util.Random;
 
 public class GenerateReport extends AppController {
 
+    /** Keep it in a static variable **/
+    private static GenerateReport instance;
+
+    /**
+     * Use the LoadInstance method to load a new object and preserve that state for the rest of runtime
+     */
+    public static void LoadInstance() {
+        if (instance == null) {
+            instance = new GenerateReport();
+        }
+
+        instance.load();
+    }
+
     @Override
     protected Scene loadAction() {
         //Borderpane Setup

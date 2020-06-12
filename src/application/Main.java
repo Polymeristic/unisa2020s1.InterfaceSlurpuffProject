@@ -18,10 +18,10 @@ public class Main extends Application {
         _mainStage = primaryStage;
 
         // Load the login page
-        //new Login().load();
+        new Login().load();
         //new Report().load();
-        //new GenerateReport().load();
-        new Support().load();
+//        new GenerateReport().load();
+//        new Support().load();
     }
 
     /**
