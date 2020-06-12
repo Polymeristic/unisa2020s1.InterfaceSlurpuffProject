@@ -20,7 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -317,7 +317,7 @@ public class GenerateReport extends AppController {
         bcYearly.getData().addAll(Year2015, Year2016, Year2017, Year2018, Year2019, Year2020);
 
         //Scene Setup + Show Stage
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(root);
 
         //Change to DaysFilter
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
