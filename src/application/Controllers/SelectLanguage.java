@@ -1,5 +1,7 @@
 package application.Controllers;
 
+import application.AppController;
+import application.Main;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,11 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class SelectLanguage extends Application {
-
-
+public class SelectLanguage extends AppController {
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    protected Scene loadAction() {
 
         VBox root=new VBox();
         root.setAlignment(Pos.TOP_LEFT);
@@ -28,21 +28,21 @@ public class SelectLanguage extends Application {
         engButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                showPic("eng.jpg",primaryStage);
+                showPic("resources/images/eng.jpg", Main.get_MainStage());
             }
         });
         Button chiButton=new Button("Chinese");
         chiButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                showPic("chi.jpg",primaryStage);
+                showPic("resources/images/chi.jpg", Main.get_MainStage());
             }
         });
         Button gerButton=new Button("German");
         gerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                showPic("ger.jpg",primaryStage);
+                showPic("resources/images/ger.jpg", Main.get_MainStage());
             }
         });
 
@@ -50,17 +50,18 @@ public class SelectLanguage extends Application {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                primaryStage.close();
+                new Home().load();
             }
         });
         root.getChildren().addAll(engButton,chiButton,gerButton,backButton);
 
         Scene scene=new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(200);
-        primaryStage.setHeight(300);
-        primaryStage.setTitle("Select Language");
-        primaryStage.show();
+
+        Main.get_MainStage().setWidth(200);
+        Main.get_MainStage().setHeight(300);
+        Main.get_MainStage().setTitle("Select Language");
+
+        return scene;
     }
 
     private void showPic(String picName,Stage owner){
@@ -72,6 +73,7 @@ public class SelectLanguage extends Application {
         ImageView imageView=new ImageView(picName);
         imageView.setFitWidth(300);
         imageView.setFitHeight(400);
+
         root.getChildren().add(imageView);
         Scene scene=new Scene(root);
 
@@ -80,9 +82,5 @@ public class SelectLanguage extends Application {
         picStage.setScene(scene);
         picStage.initOwner(owner);
         picStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
