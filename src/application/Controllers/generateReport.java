@@ -379,6 +379,7 @@ public class generateReport extends AppController {
         return scene;
     }
 
+    //Method used to generate png image, saves to resources folder by default.
     public void saveAsPng(BarChart barChart) {
         WritableImage image = barChart.snapshot(new SnapshotParameters(), null);
 
@@ -387,10 +388,11 @@ public class generateReport extends AppController {
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
+    //Get Random number of appointment days.
     private int GetRandomNumOfAppointmentsDays(){
         Random rand = new Random();
         int minAppointment = 1;
@@ -398,6 +400,7 @@ public class generateReport extends AppController {
         return rand.nextInt(maxAppointment - minAppointment + 1) + minAppointment;
     }
 
+    //Get Random Number of Appointment Month.
     private int GetRandomNumOfAppointmentsMonth(){
         Random rand = new Random();
         int minAppointment = 100;
@@ -405,6 +408,7 @@ public class generateReport extends AppController {
         return rand.nextInt(maxAppointment - minAppointment + 1) + minAppointment;
     }
 
+    //Get Random numbers of appointments yearly.
     private int GetRandomNumOfAppointmentsYearly(){
         Random rand = new Random();
         int minAppointment = 500;
@@ -412,6 +416,7 @@ public class generateReport extends AppController {
         return rand.nextInt(maxAppointment - minAppointment + 1) + minAppointment;
     }
 
+    //Take the parameter of maxNumber(depending on daily/monthly/yearly) then generate cancelled appointments.
     private int GetRandomNumOfAppointmentCancelDays(int maxNumber){
         Random rand = new Random();
         int minCancelAppointment = 1;
