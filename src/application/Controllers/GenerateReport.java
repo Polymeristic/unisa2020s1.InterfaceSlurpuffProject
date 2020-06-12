@@ -77,7 +77,7 @@ public class GenerateReport extends AppController {
         HBox exportHBox = new HBox();
         Button exportButton = new Button("Export Chart To PNG");
         exportHBox.getChildren().add(exportButton);
-        HBox.setHgrow(homeButton, Priority.ALWAYS);
+        HBox.setHgrow(exportButton, Priority.ALWAYS);
         exportHBox.setPadding(new Insets(15, 20, 5, 10));
         exportHBox.setAlignment(Pos.BOTTOM_RIGHT);
         root.setBottom(exportHBox);
