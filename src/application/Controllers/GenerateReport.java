@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-public class generateReport extends AppController {
+public class GenerateReport extends AppController {
 
     @Override
     protected Scene loadAction() {
