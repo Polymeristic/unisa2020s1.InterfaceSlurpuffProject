@@ -34,7 +34,7 @@ public class GenerateReport extends AppController {
 
     @Override
     protected Scene loadAction() {
-        //Borderpane Setup
+        //BorderPane Setup
         BorderPane root = new BorderPane();
 
         // Get calendar week start and end date
