@@ -1,21 +1,26 @@
 package application.Controllers;
 
 import application.AppController;
+import application.Main;
+import application.SimpleDialog;
 import com.sun.javafx.css.PseudoClassState;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class to control the login scene
+ */
 public class Login extends AppController {
-    private Label timeLabel;
-    private Button loginButton;
+
     private Scene scene;
 
     public Login() { }
@@ -24,37 +29,54 @@ public class Login extends AppController {
      * Runs when the scene is initialized, use this to do any on-load changes
      */
     @Override
-    public Scene loadAction() {
+    public Parent loadAction() {
         VBox box = new VBox();
         root = box;
+        root.setId("root");
+
+        Main.setDimensions(450, 400);
+
+        VBox _inputBox = new VBox(12);
+
+        TextField usernameField = new TextField();
+        PasswordField passwordField = new PasswordField();
+        Button loginButton = new Button("Login");
+        ImageView logo = new ImageView("resources/images/mediscan_logo.png");
 
         // If using stylesheets, load before anything else
         loadStylesheet("resources/stylesheets/global.css");
         loadStylesheet("resources/stylesheets/login.css");
 
-        scene = new Scene(root, STANDARD_WIDTH, STANDARD_HEIGHT);
+        box.setAlignment(Pos.TOP_CENTER);
+        box.getChildren().add(_inputBox);
+        box.setPadding(new Insets(60, 0, 0, 0));
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
+        _inputBox.getChildren().addAll(logo, usernameField, passwordField, loginButton);
+        _inputBox.setMaxWidth(300);
 
-        loginButton = new Button("Login");
-        timeLabel = new Label("{{ time }}");
+        logo.requestFocus();
+        logo.setFitWidth(300);
+        logo.setFitHeight(75);
+        logo.setSmooth(true);
+        logo.setId("logo");
 
-        loginButton.setOnAction(this::loginAction);
+        usernameField.setPromptText("Username");
+        usernameField.setId("username");
 
-        box.getChildren().addAll(timeLabel, loginButton);
+        passwordField.setPromptText("Password");
+        passwordField.setId("password");
 
-        timeLabel.setText(dtf.format(now));
+        loginButton.setId("login");
 
-        return scene;
-    }
+        loginButton.setOnAction(ActionEvent -> {
+            if (usernameField.getText().length() == 0 ||
+                passwordField.getText().length() == 0) {
+                SimpleDialog.Warning("Missing Credentials", "Please ensure all fields have been filled out.");
+            } else {
+                new Home().load();
+            }
+        });
 
-    /**
-     * Action when the login button is clicked
-     * @param actionEvent event instance
-     */
-    private void loginAction(ActionEvent actionEvent) {
-        System.out.println("Attempting to load");
-        new Home().load();
+        return root;
     }
 }
