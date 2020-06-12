@@ -1,17 +1,20 @@
 package application.Controllers;
 
 import application.AppController;
+import application.SimpleDialog;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -23,39 +26,27 @@ import javafx.scene.layout.VBox;
 
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 public class GenerateReport extends AppController {
 
-    /** Keep it in a static variable **/
-    private static GenerateReport instance;
-
     /** Scene associated with the instance **/
-    private Scene scene = null;
-
-    /**
-     * Use the LoadInstance method to load a new object and preserve that state for the rest of runtime
-     */
-    public static void LoadInstance() {
-        if (instance == null) {
-            instance = new GenerateReport();
-        }
-
-        instance.load();
-    }
+    static private VBox root = null;
 
     @Override
-    protected Scene loadAction() {
+    public Parent loadAction() {
         // Check if this instances scene has already been created
-        if (scene != null) return scene;
+        if (root != null) return root;
 
         //Borderpane Setup
-        BorderPane root = new BorderPane();
+        root = new VBox();
 
         // Get calendar week start and end date
         Calendar c = Calendar.getInstance();
@@ -72,35 +63,23 @@ public class GenerateReport extends AppController {
         ToggleGroup filterGroup = new ToggleGroup();
         ToggleButton daysButton = new ToggleButton("Days");
         daysButton.setToggleGroup(filterGroup);
+        daysButton.setSelected(true);
         ToggleButton monthsButton = new ToggleButton("Months");
         monthsButton.setToggleGroup(filterGroup);
         ToggleButton yearlyButton = new ToggleButton("Yearly");
         yearlyButton.setToggleGroup(filterGroup);
         filterHBox.setSpacing(5);
-        HBox.setHgrow(daysButton, Priority.ALWAYS);
-        HBox.setHgrow(monthsButton, Priority.ALWAYS);
-        HBox.setHgrow(yearlyButton, Priority.ALWAYS);
         filterHBox.getChildren().addAll(daysButton, monthsButton, yearlyButton);
         filterHBox.setAlignment(Pos.TOP_RIGHT);
-        root.setTop(filterHBox);
 
-        //HomeButton
-        VBox homeButtonBox = new VBox();
-        Button homeButton = new Button("Home");
-        homeButtonBox.getChildren().add(homeButton);
-        VBox.setVgrow(homeButton, Priority.ALWAYS);
-        homeButtonBox.setPadding(new Insets(15, 20, 5, 10));
-        homeButtonBox.setAlignment(Pos.TOP_LEFT);
-        root.setLeft(homeButtonBox);
+
 
         //ExportToPNG Button
         HBox exportHBox = new HBox();
         Button exportButton = new Button("Export Chart To PNG");
         exportHBox.getChildren().add(exportButton);
-        HBox.setHgrow(exportButton, Priority.ALWAYS);
         exportHBox.setPadding(new Insets(15, 20, 5, 10));
         exportHBox.setAlignment(Pos.BOTTOM_RIGHT);
-        root.setBottom(exportHBox);
 
         //BarChart Daily
         CategoryAxis xaxis = new CategoryAxis();
@@ -111,7 +90,6 @@ public class GenerateReport extends AppController {
         yaxis.setLabel("Number Of Appointments");
         BarChart bcDaily = new BarChart(xaxis, yaxis);
         bcDaily.setTitle("Weekly Report From" + " " + startDate + " " + "-" + " " + endDate);
-        root.setCenter(bcDaily);
         String AppointmentsMade = "Appointments Made";
         String AppointmentsCancelled = "Appointments Cancelled";
 
@@ -336,67 +314,26 @@ public class GenerateReport extends AppController {
         //Add all Chart Series to the chart
         bcYearly.getData().addAll(Year2015, Year2016, Year2017, Year2018, Year2019, Year2020);
 
-        //Scene Setup + Show Stage
-        scene = new Scene(root);
+        daysButton.setOnAction(ActionEvent -> root.getChildren().set(1, bcDaily));
+        monthsButton.setOnAction(ActionEvent -> root.getChildren().set(1, bcMonth));
+        yearlyButton.setOnAction(ActionEvent -> root.getChildren().set(1, bcYearly));
 
-        //Change to DaysFilter
-        EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                root.setCenter(bcDaily);
+
+        exportButton.setOnAction(ActionEvent -> {
+            if (yearlyButton.isSelected()){
+                saveAsPng(bcYearly);
+            } else if (monthsButton.isSelected()){
+                saveAsPng(bcMonth);
+            } else {
+                saveAsPng(bcDaily);
             }
-        };
+        });
 
-        daysButton.setOnAction(backToDaysFilter);
+        root.getChildren().addAll(filterHBox, bcDaily, exportHBox);
 
-        //Change Filter to MonthlyBarChart
-        EventHandler<ActionEvent> monthlyBarChart = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                root.setCenter(bcMonth);
-            }
-        };
+        root.getChildren().set(1, bcDaily);
 
-        monthsButton.setOnAction(monthlyBarChart);
-
-        //Change filter to YearlyBarChart
-        EventHandler<ActionEvent> yearlyBarChart = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                root.setCenter(bcYearly);
-            }
-        };
-
-        yearlyButton.setOnAction(yearlyBarChart);
-
-        //Exports the picked barchart to .png
-        EventHandler<ActionEvent> ExportStuff = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-                if (yearlyButton.isSelected()){
-                    saveAsPng(bcYearly);
-                } else if (monthsButton.isSelected()){
-                    saveAsPng(bcMonth);
-                } else {
-                    saveAsPng(bcDaily);
-                }
-            }
-        };
-
-        exportButton.setOnAction(ExportStuff);
-
-        //Home Button to go back to home.
-        EventHandler<ActionEvent> ReturnHome = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                new Home().load();
-            }
-        };
-
-        homeButton.setOnAction(ReturnHome);
-
-        return scene;
+        return root;
     }
 
     //Method used to generate png image, saves to resources folder by default.
@@ -407,6 +344,7 @@ public class GenerateReport extends AppController {
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            SimpleDialog.New(Alert.AlertType.INFORMATION, "Export Complete", "Snapshot exported to 'src/resources/images/BarChart.png'");
         } catch (IOException e) {
             e.printStackTrace();
         }
