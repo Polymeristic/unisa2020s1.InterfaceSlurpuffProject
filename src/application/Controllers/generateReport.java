@@ -1,6 +1,6 @@
 package application.Controllers;
 
-import javafx.application.Application;
+import application.AppController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,11 +30,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-public class generateReport extends Application {
+public class generateReport extends AppController {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
+    protected Scene loadAction() {
         //Borderpane Setup
         BorderPane root = new BorderPane();
 
@@ -254,7 +253,7 @@ public class generateReport extends Application {
 
         //Add all Chart Series to the chart
         bcMonth.getData().addAll(January, February, March, April, May, June, July, August, September, October,
-        November, December);
+                November, December);
 
 
         //BarChart for the Monthly setup
@@ -319,9 +318,6 @@ public class generateReport extends Application {
 
         //Scene Setup + Show Stage
         Scene scene = new Scene(root, 600, 600);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Reports");
-        primaryStage.show();
 
         //Change to DaysFilter
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
@@ -370,6 +366,17 @@ public class generateReport extends Application {
 
         exportButton.setOnAction(ExportStuff);
 
+        //Home Button to go back to home.
+        EventHandler<ActionEvent> ReturnHome = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent e) {
+                new Home().load();
+            }
+        };
+
+        homeButton.setOnAction(ReturnHome);
+
+        return scene;
     }
 
     public void saveAsPng(BarChart barChart) {
@@ -411,7 +418,6 @@ public class generateReport extends Application {
         return rand.nextInt(maxNumber - minCancelAppointment + 1) + minCancelAppointment;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
+
 }
