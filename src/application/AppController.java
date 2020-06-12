@@ -10,8 +10,8 @@ import java.net.PortUnreachableException;
 
 public abstract class AppController {
 
-    public static int STANDARD_WIDTH = 800;
-    public static int STANDARD_HEIGHT = 600;
+    public static int STANDARD_WIDTH = 1200;
+    public static int STANDARD_HEIGHT = 700;
 
     @FXML
     protected Parent root;
@@ -29,10 +29,7 @@ public abstract class AppController {
      * Loads in a new scene and sets it to be the currently active scene
      */
     public void load() {
-        Scene scene = loadAction();
-
-        if (scene == null)
-            throw new NullPointerException("A scene was not provided for the load action, scene is null.");
+        Scene scene = new Scene(loadAction());
 
         Main.get_MainStage().setScene(scene);
         Main.get_MainStage().show();
@@ -42,5 +39,5 @@ public abstract class AppController {
      * Action that runs when AppController.load() is run
      * @return A scene object
      */
-    protected abstract Scene loadAction();
+    public abstract Parent loadAction();
 }
