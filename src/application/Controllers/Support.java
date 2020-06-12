@@ -1,13 +1,18 @@
 package application.Controllers;
 
 import application.AppController;
+import application.SimpleDialog;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -15,13 +20,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+import java.awt.*;
+
 
 public class Support extends AppController {
-
-
     @Override
-    protected Scene loadAction() {
-
+    public Parent loadAction() {
         //Set initial GridPane and add padding and gap.
         GridPane root = new GridPane();
         root.setPadding(new Insets(10));
@@ -92,15 +96,6 @@ public class Support extends AppController {
         descriptionTextArea.wrapTextProperty().setValue(true);
         root.add(descriptionTextArea, 1, 12);
 
-
-        //HomeButton added to take back to home
-        VBox homeButtonBoxSupport = new VBox();
-        Button homeButtonSupport = new Button("Home");
-        homeButtonBoxSupport.getChildren().add(homeButtonSupport);
-        VBox.setVgrow(homeButtonSupport, Priority.ALWAYS);
-        homeButtonBoxSupport.setPadding(new Insets(15, 20, 5, 10));
-        root.add(homeButtonBoxSupport,0 , 0);
-
         //SubmitButton for after ticket is complete.
         HBox submitTicketHBox = new HBox();
         Button submitButton = new Button("Submit");
@@ -117,14 +112,12 @@ public class Support extends AppController {
             }
         };
 
-        homeButtonSupport.setOnAction(ReturnHomeSupport);
-
         //SubmitButton used with if-else loop to ensure that user has filled in all requires TextFields/TextArea.
         EventHandler<ActionEvent> SubmitButtonCheck = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
                 if (subjectTextField.getText().isEmpty() || emailTextField.getText().isEmpty() ||
-                descriptionTextArea.getText().isEmpty()){
+                        descriptionTextArea.getText().isEmpty()){
 
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setTitle("Error Submitting");
@@ -156,30 +149,7 @@ public class Support extends AppController {
 
         submitButton.setOnAction(SubmitButtonCheck);
 
-
-        //Set up scene to have a GridPane root
-        Scene scene = new Scene(root,650, 800);
-
         //return Scene to work with app controller.
-        return scene;
+        return root;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
@@ -41,9 +42,7 @@ public class Report extends AppController {
     final HBox hb = new HBox();
 
     @Override
-    protected Scene loadAction() {
-        Scene scene = new Scene(new Group());
-
+    public Parent loadAction() {
         //Table Module
         //Show the detail data of patients
         //4 Columns for patients
@@ -69,9 +68,11 @@ public class Report extends AppController {
         
         //A button for doctor to add record
         final Button addButton = new Button("Add");
+
         addButton.setOnAction((ActionEvent e) -> {
             data.add(new Person("Z","X", "Y", "W"));
-         });
+        });
+
         hb.getChildren().addAll(addButton);
         hb.setSpacing(3);
         final VBox vbox = new VBox();
@@ -112,18 +113,15 @@ public class Report extends AppController {
 		sendMsg.setFont(buttonFont); 
 		
 		//Send Msg Event
-		sendMsg.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {	
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				//Set image and text of the alert
-				Text text = new Text("Send Msg Success");
-				text.setFont(textFont);
-				BorderPane alertContent = new BorderPane(); 
-				alert.getDialogPane().setContent(alertContent);
-				alert.showAndWait();
-			}			
-		});
+		sendMsg.setOnAction(e -> {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            //Set image and text of the alert
+            Text text = new Text("Send Msg Success");
+            text.setFont(textFont);
+            BorderPane alertContent = new BorderPane();
+            alert.getDialogPane().setContent(alertContent);
+            alert.showAndWait();
+        });
 		
 		//Medical Report Module
 		//New a PieChart
@@ -141,7 +139,10 @@ public class Report extends AppController {
         gridpane.setHgap(10);
         gridpane.setVgap(10);
         final ImageView imv = new ImageView("resources/images/brain.jpg");
-        imv.setFitHeight(200); imv.setFitWidth(200);
+
+        imv.setFitHeight(200);
+        imv.setFitWidth(200);
+
         final HBox pictureRegion = new HBox();
         pictureRegion.getChildren().add(imv);
         gridpane.add(pictureRegion, 1, 1);  
@@ -180,13 +181,16 @@ public class Report extends AppController {
 
 		
 		//Add all tabs to tabpanes
-		tabPane.getTabs().addAll(tab1,tab2,tab3);		 
+		tabPane.getTabs().addAll(tab1, tab2, tab3);
 
-		//Set up scene and stage with the buttons and default size
-		((Group) scene.getRoot()).getChildren().addAll(tabPane);
+		tabPane.setPrefWidth(850);
 
-		return scene;
+        VBox r = new VBox();
+        r.getChildren().add(tabPane);
+
+		return r;
 	}
+
 	//No Database, default related PieChart
     private ObservableList<Data> getChartData() {
 	    ObservableList<Data> answer = FXCollections.observableArrayList();

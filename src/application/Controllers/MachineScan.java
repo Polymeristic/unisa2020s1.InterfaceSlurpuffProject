@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.BlendMode;
@@ -32,26 +33,20 @@ import static java.lang.Math.random;
 
 public class MachineScan extends AppController {
     @Override
-    protected Scene loadAction() {
+    public Parent loadAction() {
         VBox root = new VBox();
-        Scene scene = new Scene(root);
 
         root.setAlignment(Pos.CENTER);
         root.setSpacing(10);
         root.setPadding(new Insets(20));
 
         Button preButton=new Button("Prepare");
-        preButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                preScan();
-            }
-        });
+        preButton.setOnAction(event -> preScan());
 
         root.getChildren().add(preButton);
         Main.get_MainStage().setTitle("Machine Scan");
 
-        return scene;
+        return root;
     }
 
     private void preScan() {
@@ -70,12 +65,7 @@ public class MachineScan extends AppController {
         root.getChildren().add(imageView);
 
         Button startButton=new Button("Start");
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                scan(preStage);
-            }
-        });
+        startButton.setOnAction(event -> scan(preStage));
 
         root.getChildren().add(startButton);
 
@@ -115,14 +105,7 @@ public class MachineScan extends AppController {
         sp.getChildren().add(colorBack);
 
         Button finishButton=new Button("Finish");
-        finishButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                scanStage.close();
-
-            }
-        });
+        finishButton.setOnAction(event -> scanStage.close());
 
         root.getChildren().add(finishButton);
 
