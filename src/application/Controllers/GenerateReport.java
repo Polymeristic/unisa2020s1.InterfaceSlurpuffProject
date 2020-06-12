@@ -32,9 +32,29 @@ import java.util.Random;
 
 public class GenerateReport extends AppController {
 
+    /** Keep it in a static variable **/
+    private static GenerateReport instance;
+
+    /** Scene associated with the instance **/
+    private Scene scene = null;
+
+    /**
+     * Use the LoadInstance method to load a new object and preserve that state for the rest of runtime
+     */
+    public static void LoadInstance() {
+        if (instance == null) {
+            instance = new GenerateReport();
+        }
+
+        instance.load();
+    }
+
     @Override
     protected Scene loadAction() {
-        //BorderPane Setup
+        // Check if this instances scene has already been created
+        if (scene != null) return scene;
+
+        //Borderpane Setup
         BorderPane root = new BorderPane();
 
         // Get calendar week start and end date
@@ -317,7 +337,7 @@ public class GenerateReport extends AppController {
         bcYearly.getData().addAll(Year2015, Year2016, Year2017, Year2018, Year2019, Year2020);
 
         //Scene Setup + Show Stage
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
 
         //Change to DaysFilter
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
