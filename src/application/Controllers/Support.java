@@ -22,7 +22,7 @@ public class Support extends AppController {
     @Override
     protected Scene loadAction() {
 
-        //Set initial Gridpane and add padding and gap.
+        //Set initial GridPane and add padding and gap.
         GridPane root = new GridPane();
         root.setPadding(new Insets(10));
         root.setHgap(25);
@@ -37,7 +37,6 @@ public class Support extends AppController {
         emailAsterisk.setFill(Color.RED);
         Text descriptionAsterisk = new Text("*");
         descriptionAsterisk.setFill(Color.RED);
-
 
 
         //Label title, set to bigger and with Arial font.
@@ -120,7 +119,7 @@ public class Support extends AppController {
 
         homeButtonSupport.setOnAction(ReturnHomeSupport);
 
-        //Home Button to go back to home.
+        //SubmitButton used with if-else loop to ensure that user has filled in all requires TextFields/TextArea.
         EventHandler<ActionEvent> SubmitButtonCheck = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
@@ -158,10 +157,10 @@ public class Support extends AppController {
         submitButton.setOnAction(SubmitButtonCheck);
 
 
-        //Set up scene to have a Gridpane root
-        Scene scene = new Scene(root,700, 800);
+        //Set up scene to have a GridPane root
+        Scene scene = new Scene(root,650, 800);
 
-
+        //return Scene to work with app controller.
         return scene;
     }
 
