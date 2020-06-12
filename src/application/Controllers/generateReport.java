@@ -36,7 +36,7 @@ public class generateReport extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //Borderpane Setup
-        BorderPane bp = new BorderPane();
+        BorderPane root = new BorderPane();
 
         // Get calendar week start and end date
         Calendar c = Calendar.getInstance();
@@ -63,7 +63,7 @@ public class generateReport extends Application {
         HBox.setHgrow(yearlyButton, Priority.ALWAYS);
         filterHBox.getChildren().addAll(daysButton, monthsButton, yearlyButton);
         filterHBox.setAlignment(Pos.TOP_RIGHT);
-        bp.setTop(filterHBox);
+        root.setTop(filterHBox);
 
         //HomeButton
         VBox homeButtonBox = new VBox();
@@ -72,7 +72,7 @@ public class generateReport extends Application {
         VBox.setVgrow(homeButton, Priority.ALWAYS);
         homeButtonBox.setPadding(new Insets(15, 20, 5, 10));
         homeButtonBox.setAlignment(Pos.TOP_LEFT);
-        bp.setLeft(homeButtonBox);
+        root.setLeft(homeButtonBox);
 
         //ExportToPNG Button
         HBox exportHBox = new HBox();
@@ -81,7 +81,7 @@ public class generateReport extends Application {
         HBox.setHgrow(homeButton, Priority.ALWAYS);
         exportHBox.setPadding(new Insets(15, 20, 5, 10));
         exportHBox.setAlignment(Pos.BOTTOM_RIGHT);
-        bp.setBottom(exportHBox);
+        root.setBottom(exportHBox);
 
         //BarChart Daily
         CategoryAxis xaxis = new CategoryAxis();
@@ -92,7 +92,7 @@ public class generateReport extends Application {
         yaxis.setLabel("Number Of Appointments");
         BarChart bcDaily = new BarChart(xaxis, yaxis);
         bcDaily.setTitle("Weekly Report From" + " " + startDate + " " + "-" + " " + endDate);
-        bp.setCenter(bcDaily);
+        root.setCenter(bcDaily);
         String AppointmentsMade = "Appointments Made";
         String AppointmentsCancelled = "Appointments Cancelled";
 
@@ -318,7 +318,7 @@ public class generateReport extends Application {
         bcYearly.getData().addAll(Year2015, Year2016, Year2017, Year2018, Year2019, Year2020);
 
         //Scene Setup + Show Stage
-        Scene scene = new Scene(bp, 600, 600);
+        Scene scene = new Scene(root, 600, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Reports");
         primaryStage.show();
@@ -327,7 +327,7 @@ public class generateReport extends Application {
         EventHandler<ActionEvent> backToDaysFilter = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
-                bp.setCenter(bcDaily);
+                root.setCenter(bcDaily);
             }
         };
 
@@ -337,7 +337,7 @@ public class generateReport extends Application {
         EventHandler<ActionEvent> monthlyBarChart = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
-                bp.setCenter(bcMonth);
+                root.setCenter(bcMonth);
             }
         };
 
@@ -347,7 +347,7 @@ public class generateReport extends Application {
         EventHandler<ActionEvent> yearlyBarChart = new EventHandler<>() {
             @Override
             public void handle(ActionEvent e) {
-                bp.setCenter(bcYearly);
+                root.setCenter(bcYearly);
             }
         };
 
