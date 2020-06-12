@@ -1,0 +1,32 @@
+
+#header {
+    -fx-background-color: dodgerblue;
+    -fx-padding: 10 20 10 20;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#header:hover {
+    -fx-background-color: #3599ff;
+}
+
+#header-title {
+    -fx-text-fill: white;
+}
+
+#header-active {
+    -fx-padding: 0 0 0 16;
+    -fx-text-fill: #ffa5a5;
+}
+
+#machine {
+    -fx-padding: 5;
+    -fx-background-color: white;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 12, 0, 0, 5)
+}
+
+#machine-flow {
+    -fx-padding: 16;
+}

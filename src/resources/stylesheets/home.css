@@ -1,0 +1,54 @@
+
+#root {
+    -fx-padding: 20;
+    -fx-fill-width: true;
+}
+
+#view {
+    -fx-min-width: 850;
+    -fx-fill-width: true;
+    -fx-background-color: white;
+    -fx-padding: 8;
+}
+
+#sidebar-list {
+    -fx-focus-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
+    -fx-pref-width: 50;
+    -fx-min-height: 700;
+}
+
+#sidebar-list:focused {
+    -fx-focus-color: transparent;
+}
+
+#sidebar {
+    -fx-pref-width: 50;
+}
+
+#sidebar .list-cell {
+    -fx-text-fill: #474747;
+    -fx-background-color: white;
+    -fx-padding: 8 24 8 24;
+    -fx-font-size: 18;
+    -fx-border-width: 2;
+    -fx-border-color: white;
+}
+
+#sidebar .list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: dodgerblue;
+    -fx-text-fill: white;
+}
+
+#sidebar .list-cell:filled:selected:hover, .list-cell:selected:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}
+
+#sidebar .list-cell:filled:hover, #sidebar .list-cell:hover {
+    -fx-background-color: #edf6fa;
+    -fx-cell-hover-color: #0093ff;
+    -fx-font-size: 18;
+}

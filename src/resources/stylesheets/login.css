@@ -1,4 +1,9 @@
 
-.label {
-    -fx-text-fill: blue;
+#logo {
+    -fx-padding: 0 0 24 0;
 }
+
+#login {
+    -fx-pref-width: 300;
+}
+

@@ -1,0 +1,41 @@
+
+#root {
+    /*-fx-background-color: white;*/
+    -fx-focus-color: transparent;
+}
+
+.text-field, .password-field, .text-area {
+    -fx-border-color: lightgrey;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-border-style: solid;
+    -fx-text-box-border: transparent;
+    -fx-min-width: 50;
+    -fx-min-height: 30;
+}
+
+.text-field:hover, .password-field:hover, .text-area:hover {
+    -fx-border-color: cornflowerblue;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused {
+    -fx-border-color: dodgerblue;
+    -fx-focus-color: transparent;
+}
+
+.button, .toggle-button {
+    -fx-background-color: dodgerblue;
+    -fx-text-fill: white;
+    -fx-border-insets: 0 0 0 0;
+    -fx-border-style: solid;
+    -fx-border-color: royalblue;
+    -fx-border-radius: 0;
+}
+
+.button:hover, .toggle-button:hover {
+    -fx-background-color: cornflowerblue;
+}
+
+.button:focused, .toggle-button:focused {
+    -fx-background-color: royalblue;
+}
