@@ -99,6 +99,7 @@ public class Support extends AppController {
         //SubmitButton for after ticket is complete.
         HBox submitTicketHBox = new HBox();
         Button submitButton = new Button("Submit");
+        submitButton.setPrefSize(175, 110);
         submitTicketHBox.getChildren().add(submitButton);
         HBox.setHgrow(submitButton, Priority.ALWAYS);
         root.add(submitButton, 1, 14);
