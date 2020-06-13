@@ -11,7 +11,7 @@ import java.net.PortUnreachableException;
 public abstract class AppController {
 
     public static int STANDARD_WIDTH = 1200;
-    public static int STANDARD_HEIGHT = 700;
+    public static int STANDARD_HEIGHT = 800;
 
     @FXML
     protected Parent root;
