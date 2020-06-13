@@ -22,6 +22,7 @@ import javafx.scene.text.TextFlow;
 
 import java.awt.*;
 
+//Written by Christopher Plesa - Plecy002
 
 public class Support extends AppController {
     @Override

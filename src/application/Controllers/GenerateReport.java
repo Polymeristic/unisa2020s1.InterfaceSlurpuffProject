@@ -35,6 +35,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+//Written by Christopher Plesa - Plecy002
+
 public class GenerateReport extends AppController {
 
     /** Scene associated with the instance **/
