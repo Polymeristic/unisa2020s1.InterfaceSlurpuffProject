@@ -50,12 +50,17 @@ public class Home extends AppController {
         sidebar.getChildren().addAll(logo, sidebarList);
         sidebar.setPrefWidth(50);
 
-        sidebarList.getItems().addAll("Med. Report", "Scan", "Reports", "Security", "Maintenance", "Support", "Language");
+        sidebarList.getItems().addAll(
+                "Med. Report", "Booking", "Search Booking", "Scan", "Reports",
+                "Security", "Maintenance", "Support", "Language"
+        );
         sidebarList.getSelectionModel().selectFirst();
 
         sidebarList.setOnMouseClicked(EventHandler -> {
             switch (sidebarList.getSelectionModel().getSelectedItem()) {
                 case "Med. Report": setScene(new Report()); break;
+                case "Booking": setScene(new Booking()); break;
+                case "Search Booking": setScene(new MedicalRecordClerk()); break;
                 case "Scan": setScene(new MachineScan()); break;
                 case "Reports": setScene(new GenerateReport()); break;
                 case "Security": setScene(new Security()); break;
