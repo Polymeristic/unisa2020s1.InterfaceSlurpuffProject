@@ -3,10 +3,7 @@ package application.Controllers;
 import application.AppController;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -37,7 +34,24 @@ public class Maintenance extends AppController {
         VBox buildingC = createScannerPanel("Building C");
         VBox buildingD = createScannerPanel("Building D");
 
-        root.getChildren().addAll(buildingA, buildingB, buildingC, buildingD);
+        MenuBar tabPane = new MenuBar();
+
+        Menu reports = new Menu("Report");
+        Menu view = new Menu("View");
+
+        reports.getItems().addAll(
+                new MenuItem("Create"),
+                new MenuItem("Export All")
+        );
+
+        view.getItems().addAll(
+                new MenuItem("Collapse"),
+                new MenuItem("Expand")
+        );
+
+        tabPane.getMenus().addAll(reports, view, new Menu("Help"));
+
+        root.getChildren().addAll(tabPane, buildingA, buildingB, buildingC, buildingD);
 
         ((FlowPane) buildingA.getChildren().get(1)).getChildren().addAll(
                 createMachineBox("MRI [SC-001]", true),
