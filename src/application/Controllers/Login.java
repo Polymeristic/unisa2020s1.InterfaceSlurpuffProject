@@ -3,7 +3,6 @@ package application.Controllers;
 import application.AppController;
 import application.Main;
 import application.SimpleDialog;
-import com.sun.javafx.css.PseudoClassState;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
