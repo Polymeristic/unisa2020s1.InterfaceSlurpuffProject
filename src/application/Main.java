@@ -16,6 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Set the main stage for use in other classes
         _mainStage = primaryStage;
+        primaryStage.setTitle("MediScan");
 
         // Load the login page
         new Login().load();
