@@ -342,11 +342,11 @@ public class GenerateReport extends AppController {
     public void saveAsPng(BarChart barChart) {
         WritableImage image = barChart.snapshot(new SnapshotParameters(), null);
 
-        File file = new File("src/resources/images/BarChart.png");
+        File file = new File(System.getProperty("user.home") + "/Desktop/chart.png");
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            SimpleDialog.New(Alert.AlertType.INFORMATION, "Export Complete", "Snapshot exported to 'src/resources/images/BarChart.png'");
+            SimpleDialog.New(Alert.AlertType.INFORMATION, "Export Complete", "Snapshot exported to your desktop.");
         } catch (IOException e) {
             e.printStackTrace();
         }
